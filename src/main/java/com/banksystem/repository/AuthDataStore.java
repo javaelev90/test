@@ -1,4 +1,4 @@
 package com.banksystem.repository;
 
-public class DataStore {
+public class AuthDataStore {
 }
