@@ -1,4 +1,7 @@
 package com.banksystem.service;
 
-public class AccountService {
+public class BankService {
+
+
+
 }

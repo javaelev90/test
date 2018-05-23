@@ -1,25 +1,36 @@
 package com.banksystem.model;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
 public class UserTest {
 
-    @Test
-    public void canMakeUser(){
-        User user = new User("Åsa", "Marklund");
+    private User user;
 
-        Assert.assertEquals("Åsa", user.getFirstName());
-        Assert.assertEquals("Marklund", user.getLastName());
+    @Before
+    public void setup(){
+        user = new User();
     }
 
     @Test
-    public void canUpdateUser(){
-        User user = new User("Pelle", "Sari");
+    public void testCanSetId(){
+        user.setId(1);
+        Assert.assertEquals(1, user.getId());
+    }
+
+    @Test
+    public void testCanUpdateFirstName(){
 
         user.setFirstName("Ivar");
         Assert.assertEquals("Ivar", user.getFirstName());
-        user.setLastName("Marklund");
-        Assert.assertEquals("Marklund", user.getLastName());
     }
+
+    @Test
+    public void testCanUpdateLastName(){
+
+        user.setLastName("Sari");
+        Assert.assertEquals("Sari", user.getLastName());
+    }
+
 }
