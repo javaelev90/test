@@ -1,15 +1,21 @@
 package com.banksystem.ui;
 
 import com.banksystem.handlers.AccountHandler;
+import com.banksystem.model.BankAccount;
+import com.banksystem.model.User;
 
+import javax.security.auth.login.AccountLockedException;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.List;
 
 public class ConsoleUI {
 
     private AccountHandler accountHandler;
+    private User user;
 
-    public ConsoleUI(AccountHandler accountHandler){
+    public ConsoleUI(AccountHandler accountHandler, User user){
+        this.user = user;
         this.accountHandler = accountHandler;
     }
 
@@ -24,12 +30,13 @@ public class ConsoleUI {
 
             while(!userWantsToExit){
                 showMainMenu();
-                int choice = 0;
+                int choice = reader.readChoiceInput();
                 switch(choice) {
                     case 1:
-
+                        printAccounts(accountHandler.getAllAccountsForUser(user.getId()));
                         break;
                     case 2:
+                        printBalanceForAllAccounts(accountHandler.getAllAccountsForUser(user.getId()));
                         break;
                     case 3:
                         break;
@@ -63,6 +70,22 @@ public class ConsoleUI {
             System.err.println("An "+e+" was thrown when reading from system in.");
         }
 
+    }
+
+    public void printBalanceForAllAccounts(List<BankAccount> accounts){
+        accounts.forEach(account -> {
+            try {
+                double balance = account.getAccountBalance();
+                System.out.println("Account "+account.getAccountNumber()+" has balance: "+balance);
+            } catch (AccountLockedException e) {
+                System.out.println("That account is locked. So you can't check balance.");
+            }
+        });
+    }
+
+    public void printAccounts(List<BankAccount> accounts){
+        System.out.println("Accounts: ");
+        accounts.forEach(e -> System.out.println(e.getAccountNumber()));
     }
 
     /**

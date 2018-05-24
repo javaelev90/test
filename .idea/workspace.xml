@@ -7,10 +7,13 @@
     <list default="true" id="c490166f-5f2d-46ba-9034-325618fc73dd" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/banksystem/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/banksystem/App.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/banksystem/model/BankAccount.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/banksystem/model/BankAccount.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/banksystem/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/banksystem/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/banksystem/handlers/AccountHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/banksystem/handlers/AccountHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/banksystem/model/TransactionInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/banksystem/model/TransactionInfo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/banksystem/repository/BankDataStore.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/banksystem/repository/BankDataStore.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/banksystem/ui/ConsoleUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/banksystem/ui/ConsoleUI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/banksystem/ui/InputReader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/banksystem/ui/InputReader.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test.iml" beforeDir="false" afterPath="$PROJECT_DIR$/test.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/banksystem/handlers/AccountHandlerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/banksystem/handlers/AccountHandlerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/banksystem/repository/BankDataStoreTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/banksystem/repository/BankDataStoreTest.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -21,42 +24,82 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.5">
-      <split-first>
-        <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-          <file leaf-file-name="BankDataStore.java" pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/src/main/java/com/banksystem/repository/BankDataStore.java">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="236">
-                  <caret line="21" column="56" selection-start-line="21" selection-start-column="41" selection-end-line="21" selection-end-column="56" />
-                  <folding>
-                    <element signature="imports" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-        </leaf>
-      </split-first>
-      <split-second>
-        <leaf>
-          <file leaf-file-name="BankDataStoreTest.java" pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/src/test/java/com/banksystem/repository/BankDataStoreTest.java">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="408">
-                  <caret line="170" lean-forward="true" selection-start-line="170" selection-end-line="170" />
-                  <folding>
-                    <element signature="imports" expanded="true" />
-                    <element signature="e#909#910#0" expanded="true" />
-                    <element signature="e#941#942#0" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-        </leaf>
-      </split-second>
-    </splitter>
+    <leaf>
+      <file leaf-file-name="AccountHandler.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/banksystem/handlers/AccountHandler.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="577">
+              <caret line="38" column="40" lean-forward="true" selection-start-line="38" selection-start-column="40" selection-end-line="38" selection-end-column="40" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ConsoleUI.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/banksystem/ui/ConsoleUI.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="543">
+              <caret line="57" column="30" lean-forward="true" selection-start-line="57" selection-start-column="30" selection-end-line="57" selection-end-column="30" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="TransactionInfo.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/banksystem/model/TransactionInfo.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="136">
+              <caret line="8" column="79" selection-start-line="8" selection-start-column="79" selection-end-line="8" selection-end-column="79" />
+              <folding>
+                <element signature="e#471#472#0" expanded="true" />
+                <element signature="e#511#512#0" expanded="true" />
+                <element signature="e#551#552#0" expanded="true" />
+                <element signature="e#589#590#0" expanded="true" />
+                <element signature="e#630#631#0" expanded="true" />
+                <element signature="e#667#668#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="App.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/banksystem/App.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="136">
+              <caret line="23" lean-forward="true" selection-start-line="23" selection-end-line="23" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Main.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/banksystem/Main.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="323">
+              <caret line="19" lean-forward="true" selection-start-line="19" selection-end-line="19" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="InputReader.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/banksystem/ui/InputReader.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="186">
+              <caret line="19" column="33" lean-forward="true" selection-start-line="19" selection-start-column="33" selection-end-line="19" selection-end-column="33" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -80,7 +123,6 @@
         <option value="$PROJECT_DIR$/src/main/java/com/banksystem/repository/DataStore.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/banksystem/model/Auth.java" />
         <option value="$PROJECT_DIR$/src/main/java/App.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/banksystem/Main.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/banksystem/Exceptions/SetupNotCalledException.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/banksystem/Exceptions/NegativeDepositException.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/banksystem/Exceptions/WithdrawalToBigException.java" />
@@ -92,16 +134,17 @@
         <option value="$PROJECT_DIR$/src/test/java/com/banksystem/model/UserTest.java" />
         <option value="$PROJECT_DIR$/src/test/java/com/banksystem/model/BankAccountTest.java" />
         <option value="$PROJECT_DIR$/src/test/java/com/banksystem/model/TransactionInfo.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/banksystem/model/TransactionInfo.java" />
         <option value="$PROJECT_DIR$/src/test/java/com/banksystem/model/TransactionInfoTest.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/banksystem/ui/InputReader.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/banksystem/model/BankAccount.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/banksystem/repository/BankDataStore.java" />
         <option value="$PROJECT_DIR$/src/test/java/com/banksystem/repository/BankDataStoreTest.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/banksystem/handlers/AccountHandler.java" />
         <option value="$PROJECT_DIR$/src/test/java/com/banksystem/handlers/AccountHandlerTest.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/banksystem/App.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/banksystem/Main.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/banksystem/ui/ConsoleUI.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/banksystem/ui/InputReader.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/banksystem/model/BankAccount.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/banksystem/repository/BankDataStore.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/banksystem/model/TransactionInfo.java" />
       </list>
     </option>
   </component>
@@ -292,55 +335,20 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="JUnit.com.banksystem in test">
+  <component name="RunManager" selected="Application.Main">
+    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.banksystem.Main" />
+      <module name="test" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.banksystem.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+    </configuration>
     <configuration default="true" type="Application" factoryName="Application">
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-    </configuration>
-    <configuration name="AccountHandlerTest.testAddMoneyToAccount" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="test" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.banksystem.handlers.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="PACKAGE_NAME" value="com.banksystem.handlers" />
-      <option name="MAIN_CLASS_NAME" value="com.banksystem.handlers.AccountHandlerTest" />
-      <option name="METHOD_NAME" value="testAddMoneyToAccount" />
-      <option name="TEST_OBJECT" value="method" />
-      <option name="VM_PARAMETERS" value="-ea" />
-      <option name="PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <option name="TEST_SEARCH_SCOPE">
-        <value defaultName="singleModule" />
-      </option>
-      <patterns />
-    </configuration>
-    <configuration name="AccountHandlerTest.testGetAccount" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="test" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.banksystem.handlers.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="PACKAGE_NAME" value="com.banksystem.handlers" />
-      <option name="MAIN_CLASS_NAME" value="com.banksystem.handlers.AccountHandlerTest" />
-      <option name="METHOD_NAME" value="testGetAccount" />
-      <option name="TEST_OBJECT" value="method" />
-      <option name="VM_PARAMETERS" value="-ea" />
-      <option name="PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <option name="TEST_SEARCH_SCOPE">
-        <value defaultName="singleModule" />
-      </option>
-      <patterns />
     </configuration>
     <configuration name="AccountHandlerTest.testGetTransactionLogForTransaction" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="test" />
@@ -365,6 +373,52 @@
       </option>
       <patterns />
     </configuration>
+    <configuration name="AccountHandlerTest.testIfDepositTransactionWasSaved" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="test" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.banksystem.handlers.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" value="com.banksystem.handlers" />
+      <option name="MAIN_CLASS_NAME" value="com.banksystem.handlers.AccountHandlerTest" />
+      <option name="METHOD_NAME" value="testIfDepositTransactionWasSaved" />
+      <option name="TEST_OBJECT" value="method" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="singleModule" />
+      </option>
+      <patterns />
+    </configuration>
+    <configuration name="AccountHandlerTest.testIfWithdrawalTransactionWasSaved" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="test" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.banksystem.handlers.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" value="com.banksystem.handlers" />
+      <option name="MAIN_CLASS_NAME" value="com.banksystem.handlers.AccountHandlerTest" />
+      <option name="METHOD_NAME" value="testIfWithdrawalTransactionWasSaved" />
+      <option name="TEST_OBJECT" value="method" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="singleModule" />
+      </option>
+      <patterns />
+    </configuration>
     <configuration name="AccountHandlerTest.testTransferMoney" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="test" />
       <extension name="coverage">
@@ -378,29 +432,6 @@
       <option name="PACKAGE_NAME" value="com.banksystem.handlers" />
       <option name="MAIN_CLASS_NAME" value="com.banksystem.handlers.AccountHandlerTest" />
       <option name="METHOD_NAME" value="testTransferMoney" />
-      <option name="TEST_OBJECT" value="method" />
-      <option name="VM_PARAMETERS" value="-ea" />
-      <option name="PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <option name="TEST_SEARCH_SCOPE">
-        <value defaultName="singleModule" />
-      </option>
-      <patterns />
-    </configuration>
-    <configuration name="AccountHandlerTest.testWithdrawMoneyFromAccount" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="test" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.banksystem.handlers.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="PACKAGE_NAME" value="com.banksystem.handlers" />
-      <option name="MAIN_CLASS_NAME" value="com.banksystem.handlers.AccountHandlerTest" />
-      <option name="METHOD_NAME" value="testWithdrawMoneyFromAccount" />
       <option name="TEST_OBJECT" value="method" />
       <option name="VM_PARAMETERS" value="-ea" />
       <option name="PARAMETERS" />
@@ -508,19 +539,19 @@
     <list>
       <item itemvalue="JUnit.BankAccountTest" />
       <item itemvalue="JUnit.com.banksystem in test" />
-      <item itemvalue="JUnit.AccountHandlerTest.testGetAccount" />
-      <item itemvalue="JUnit.AccountHandlerTest.testAddMoneyToAccount" />
-      <item itemvalue="JUnit.AccountHandlerTest.testWithdrawMoneyFromAccount" />
       <item itemvalue="JUnit.AccountHandlerTest.testTransferMoney" />
       <item itemvalue="JUnit.AccountHandlerTest.testGetTransactionLogForTransaction" />
+      <item itemvalue="JUnit.AccountHandlerTest.testIfDepositTransactionWasSaved" />
+      <item itemvalue="JUnit.AccountHandlerTest.testIfWithdrawalTransactionWasSaved" />
+      <item itemvalue="Application.Main" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.Main" />
         <item itemvalue="JUnit.AccountHandlerTest.testGetTransactionLogForTransaction" />
+        <item itemvalue="JUnit.AccountHandlerTest.testIfWithdrawalTransactionWasSaved" />
+        <item itemvalue="JUnit.AccountHandlerTest.testIfDepositTransactionWasSaved" />
         <item itemvalue="JUnit.AccountHandlerTest.testTransferMoney" />
-        <item itemvalue="JUnit.AccountHandlerTest.testWithdrawMoneyFromAccount" />
-        <item itemvalue="JUnit.AccountHandlerTest.testAddMoneyToAccount" />
-        <item itemvalue="JUnit.AccountHandlerTest.testGetAccount" />
       </list>
     </recent_temporary>
   </component>
@@ -538,34 +569,34 @@
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="AccountHandlerTest_testAddMoneyToAccount - 2018.05.24 at 15h 30m 57s.xml">
-      <configuration name="AccountHandlerTest.testAddMoneyToAccount" configurationId="JUnit" />
+    <history-entry file="AccountHandlerTest_testIfWithdrawalTransactionWasSaved - 2018.05.24 at 20h 48m 53s.xml">
+      <configuration name="AccountHandlerTest.testIfWithdrawalTransactionWasSaved" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="com_banksystem_in_test - 2018.05.24 at 15h 31m 09s.xml">
+    <history-entry file="AccountHandlerTest_testIfWithdrawalTransactionWasSaved - 2018.05.24 at 20h 51m 37s.xml">
+      <configuration name="AccountHandlerTest.testIfWithdrawalTransactionWasSaved" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="com_banksystem_in_test - 2018.05.24 at 20h 52m 37s.xml">
       <configuration name="com.banksystem in test" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="com_banksystem_in_test - 2018.05.24 at 15h 37m 44s.xml">
+    <history-entry file="com_banksystem_in_test - 2018.05.24 at 21h 04m 13s.xml">
       <configuration name="com.banksystem in test" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="com_banksystem_in_test - 2018.05.24 at 15h 37m 53s.xml">
+    <history-entry file="com_banksystem_in_test - 2018.05.24 at 21h 15m 53s.xml">
       <configuration name="com.banksystem in test" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="AccountHandlerTest_testWithdrawMoneyFromAccount - 2018.05.24 at 15h 44m 59s.xml">
-      <configuration name="AccountHandlerTest.testWithdrawMoneyFromAccount" configurationId="JUnit" />
+    <history-entry file="AccountHandlerTest_testIfWithdrawalTransactionWasSaved - 2018.05.24 at 21h 24m 24s.xml">
+      <configuration name="AccountHandlerTest.testIfWithdrawalTransactionWasSaved" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="AccountHandlerTest_testTransferMoney - 2018.05.24 at 16h 23m 37s.xml">
-      <configuration name="AccountHandlerTest.testTransferMoney" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="com_banksystem_in_test - 2018.05.24 at 16h 28m 57s.xml">
+    <history-entry file="com_banksystem_in_test - 2018.05.24 at 21h 24m 33s.xml">
       <configuration name="com.banksystem in test" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="AccountHandlerTest_testGetTransactionLogForTransaction - 2018.05.24 at 16h 35m 22s.xml">
+    <history-entry file="AccountHandlerTest_testGetTransactionLogForTransaction - 2018.05.24 at 21h 26m 26s.xml">
       <configuration name="AccountHandlerTest.testGetTransactionLogForTransaction" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="AccountHandlerTest_testGetTransactionLogForTransaction - 2018.05.24 at 16h 35m 50s.xml">
+    <history-entry file="AccountHandlerTest_testGetTransactionLogForTransaction - 2018.05.24 at 21h 27m 15s.xml">
       <configuration name="AccountHandlerTest.testGetTransactionLogForTransaction" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="com_banksystem_in_test - 2018.05.24 at 16h 36m 02s.xml">
+    <history-entry file="com_banksystem_in_test - 2018.05.24 at 21h 28m 12s.xml">
       <configuration name="com.banksystem in test" configurationId="JUnit" />
     </history-entry>
   </component>
@@ -574,12 +605,13 @@
     <editor active="true" />
     <layout>
       <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="Messages" order="7" weight="0.3299389" />
       <window_info anchor="right" id="Palette&#9;" order="3" />
       <window_info id="Image Layers" order="2" />
       <window_info anchor="right" id="Capture Analysis" order="3" />
       <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
       <window_info anchor="right" id="Maven Projects" order="3" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.32892057" />
+      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.3282365" />
       <window_info anchor="bottom" id="Version Control" order="7" />
       <window_info anchor="bottom" id="Terminal" order="7" weight="0.3299389" />
       <window_info id="Capture Tool" order="2" />
@@ -598,7 +630,6 @@
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Messages" order="7" weight="0.3299389" />
     </layout>
   </component>
   <component name="VcsContentAnnotationSettings">
@@ -626,8 +657,6 @@
           <caret line="70" column="19" lean-forward="true" selection-start-line="70" selection-start-column="19" selection-end-line="70" selection-end-column="19" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#1024#1025#0" expanded="true" />
-            <element signature="e#1060#1061#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -660,8 +689,6 @@
           <caret line="21" column="5" selection-start-line="21" selection-start-column="5" selection-end-line="21" selection-end-column="5" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#1024#1025#0" expanded="true" />
-            <element signature="e#1060#1061#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -737,13 +764,6 @@
     <entry file="file://$PROJECT_DIR$/src/main/java/com/banksystem/service/AuthService.java" />
     <entry file="file://$PROJECT_DIR$/src/main/java/com/banksystem/repository/AuthDataStore.java" />
     <entry file="file://$PROJECT_DIR$/src/main/java/com/banksystem/model/Auth.java" />
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/banksystem/Main.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="9" lean-forward="true" selection-start-line="9" selection-end-line="9" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$USER_HOME$/Downloads/hamcrest-core-1.3.jar!/org/hamcrest/MatcherAssert.class" />
     <entry file="file://$PROJECT_DIR$/src/main/java/com/banksystem/Exceptions/SetupNotCalledException.java">
       <provider selected="true" editor-type-id="text-editor">
@@ -798,16 +818,6 @@
       </provider>
     </entry>
     <entry file="jar://C:/Utbildning/jdk8u161/jdk/jre/lib/rt.jar!/java/util/function/IntConsumer.class" />
-    <entry file="file://$PROJECT_DIR$/src/test/java/com/banksystem/model/BankAccountTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1401">
-          <caret line="106" column="32" selection-start-line="106" selection-start-column="7" selection-end-line="106" selection-end-column="32" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="272">
@@ -815,79 +825,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/com/banksystem/handlers/AccountHandlerTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="408">
-          <caret line="26" lean-forward="true" selection-start-line="26" selection-end-line="26" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://D:/Program/Java/jdk1.8.0_144/src.zip!/java/lang/Integer.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="437">
           <caret line="611" column="38" lean-forward="true" selection-start-line="611" selection-start-column="38" selection-end-line="611" selection-end-column="38" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/banksystem/handlers/AccountHandler.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="425">
-          <caret line="29" column="5" lean-forward="true" selection-start-line="29" selection-start-column="5" selection-end-line="29" selection-end-column="5" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/banksystem/model/TransactionInfo.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="19" column="31" lean-forward="true" selection-start-line="19" selection-start-column="31" selection-end-line="19" selection-end-column="31" />
-          <folding>
-            <element signature="e#459#460#0" expanded="true" />
-            <element signature="e#499#500#0" expanded="true" />
-            <element signature="e#539#540#0" expanded="true" />
-            <element signature="e#577#578#0" expanded="true" />
-            <element signature="e#618#619#0" expanded="true" />
-            <element signature="e#655#656#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/banksystem/ui/InputReader.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="19" column="33" lean-forward="true" selection-start-line="19" selection-start-column="33" selection-end-line="19" selection-end-column="33" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#168#169#0" expanded="true" />
-            <element signature="e#193#194#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/banksystem/ui/ConsoleUI.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="442">
-          <caret line="29" selection-start-line="29" selection-end-line="29" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#197#198#0" expanded="true" />
-            <element signature="e#249#250#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/banksystem/App.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="21" column="20" selection-start-line="21" selection-start-column="20" selection-end-line="21" selection-end-column="20" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -901,22 +842,40 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/banksystem/model/BankAccount.java">
+    <entry file="file://$PROJECT_DIR$/src/test/java/com/banksystem/model/BankAccountTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-424">
-          <caret line="17" column="4" selection-start-line="17" selection-start-column="4" selection-end-line="17" selection-end-column="4" />
+        <state relative-caret-position="922">
+          <caret line="106" column="32" selection-start-line="106" selection-start-column="7" selection-end-line="106" selection-end-column="32" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#1024#1025#0" expanded="true" />
-            <element signature="e#1060#1061#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/banksystem/model/BankAccount.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="17" lean-forward="true" selection-start-line="17" selection-end-line="17" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/com/banksystem/handlers/AccountHandlerTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="376">
+          <caret line="148" lean-forward="true" selection-start-line="148" selection-end-line="148" />
+          <folding>
+            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/banksystem/repository/BankDataStore.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="236">
-          <caret line="21" column="56" selection-start-line="21" selection-start-column="41" selection-end-line="21" selection-end-column="56" />
+        <state relative-caret-position="365">
+          <caret line="86" column="82" selection-start-line="86" selection-start-column="82" selection-end-line="86" selection-end-column="82" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -925,12 +884,74 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/com/banksystem/repository/BankDataStoreTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="408">
-          <caret line="170" lean-forward="true" selection-start-line="170" selection-end-line="170" />
+        <state relative-caret-position="801">
+          <caret line="185" column="5" lean-forward="true" selection-start-line="185" selection-start-column="5" selection-end-line="185" selection-end-column="5" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#909#910#0" expanded="true" />
             <element signature="e#941#942#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/banksystem/ui/InputReader.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="186">
+          <caret line="19" column="33" lean-forward="true" selection-start-line="19" selection-start-column="33" selection-end-line="19" selection-end-column="33" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/banksystem/handlers/AccountHandler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="577">
+          <caret line="38" column="40" lean-forward="true" selection-start-line="38" selection-start-column="40" selection-end-line="38" selection-end-column="40" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/banksystem/Main.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="323">
+          <caret line="19" lean-forward="true" selection-start-line="19" selection-end-line="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/banksystem/App.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="23" lean-forward="true" selection-start-line="23" selection-end-line="23" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/banksystem/ui/ConsoleUI.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="543">
+          <caret line="57" column="30" lean-forward="true" selection-start-line="57" selection-start-column="30" selection-end-line="57" selection-end-column="30" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/banksystem/model/TransactionInfo.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="8" column="79" selection-start-line="8" selection-start-column="79" selection-end-line="8" selection-end-column="79" />
+          <folding>
+            <element signature="e#471#472#0" expanded="true" />
+            <element signature="e#511#512#0" expanded="true" />
+            <element signature="e#551#552#0" expanded="true" />
+            <element signature="e#589#590#0" expanded="true" />
+            <element signature="e#630#631#0" expanded="true" />
+            <element signature="e#667#668#0" expanded="true" />
           </folding>
         </state>
       </provider>

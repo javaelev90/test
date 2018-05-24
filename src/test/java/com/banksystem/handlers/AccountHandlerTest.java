@@ -82,10 +82,17 @@ public class AccountHandlerTest {
     }
 
     @Test
-    public void testAddMoneyToAccount() throws NegativeDepositException, AccountLockedException {
+    public void testDepositMoneyToAccount() throws NegativeDepositException, AccountLockedException {
         BankAccount account = helperMakeAccountAndAddMoneyToThenReturnIt(100.0);
 
         MatcherAssert.assertThat(100.0, CoreMatchers.equalTo(account.getAccountBalance()));
+    }
+
+    @Test
+    public void testIfDepositTransactionWasSaved() throws NegativeDepositException, AccountLockedException {
+        BankAccount account = helperMakeAccountAndAddMoneyToThenReturnIt(100.0);
+        List<TransactionInfo> transactionInfoList = accountHandler.getTransactionsLog(account.getAccountNumber());
+        MatcherAssert.assertThat(100.0, CoreMatchers.equalTo(transactionInfoList.get(0).getTransferAmount()));
     }
 
     @Test
@@ -95,9 +102,19 @@ public class AccountHandlerTest {
         MatcherAssert.assertThat(30.0, CoreMatchers.equalTo(account.getAccountBalance()));
     }
 
+    @Test
+    public void testIfWithdrawalTransactionWasSaved() throws NegativeDepositException, AccountLockedException, WithdrawalExceedsBalance {
+        BankAccount account = helperMakeAccountAndAddMoneyToThenReturnIt(100.0);
+        accountHandler.withdrawMoney(account.getAccountNumber(), 70.0);
+        List<TransactionInfo> transactionInfoList = accountHandler.getTransactionsLog(account.getAccountNumber());
+        // Check second index in transactionInfoList since a deposit was made before
+        MatcherAssert.assertThat(-70.0, CoreMatchers.equalTo(transactionInfoList.get(1).getTransferAmount()));
+    }
+
     private BankAccount helperMakeAccountAndAddMoneyToThenReturnIt(double amount) throws NegativeDepositException, AccountLockedException {
         int userId = 5;
         List<Long> accountNumbers = setUpUserWithMultipleAccounts(1, userId);
+        //Beware that the depositMoney adds a transactionInfo object
         accountHandler.depositMoney(accountNumbers.get(0), amount);
         BankAccount account = accountHandler.getAccount(accountNumbers.get(0));
         return account;
@@ -117,14 +134,30 @@ public class AccountHandlerTest {
     @Test
     public void testGetTransactionLogForTransaction() throws NegativeDepositException, AccountLockedException, WithdrawalExceedsBalance {
         double amount = 30.0;
+
         BankAccount fromAccount = helperMakeAccountAndAddMoneyToThenReturnIt(100.0);
         BankAccount toAccount = helperMakeAccountAndAddMoneyToThenReturnIt(0.0);
 
         accountHandler.transferMoney(fromAccount.getAccountNumber(), toAccount.getAccountNumber(), amount);
+
         List<TransactionInfo> transactionLog = accountHandler.getTransactionsLog(fromAccount.getAccountNumber());
-        Assert.assertEquals(transactionLog.get(0).getFromAccountNumber(), fromAccount.getAccountNumber());
-        Assert.assertEquals(transactionLog.get(0).getToAccountNumber(), toAccount.getAccountNumber());
-        MatcherAssert.assertThat(amount, CoreMatchers.equalTo(transactionLog.get(0).getTransferAmount()));
+        // Check index 1 since a deposit was made before in helperMakeAccountAndAddMoneyToThenReturnIt method
+        Assert.assertEquals(transactionLog.get(1).getFromAccountNumber(), fromAccount.getAccountNumber());
+        Assert.assertEquals(transactionLog.get(1).getToAccountNumber(), toAccount.getAccountNumber());
+        //Should be a negative amount on fromAccounts log, the withdrawn amount
+        MatcherAssert.assertThat(-amount, CoreMatchers.equalTo(transactionLog.get(1).getTransferAmount()));
+
+
+        transactionLog = accountHandler.getTransactionsLog(toAccount.getAccountNumber());
+        // Check index 1 since a deposit was made before in helperMakeAccountAndAddMoneyToThenReturnIt method
+        Assert.assertEquals(transactionLog.get(1).getFromAccountNumber(), fromAccount.getAccountNumber());
+        Assert.assertEquals(transactionLog.get(1).getToAccountNumber(), toAccount.getAccountNumber());
+        //Should be a positive amount on toAccounts log, the deposited amount
+        MatcherAssert.assertThat(amount, CoreMatchers.equalTo(transactionLog.get(1).getTransferAmount()));
     }
+
+
+
+
 
 }

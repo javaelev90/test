@@ -166,7 +166,7 @@ public class BankDataStoreTest {
     public void testCanStoreTransactionInfo() {
         dataStore.makeAccount(1);
         TransactionInfo tInfo = new TransactionInfo(0L, 1L, 100.0);
-        Assert.assertTrue(dataStore.storeTransactionInfo(tInfo));
+        Assert.assertTrue(dataStore.storeTransactionInfo(tInfo, 0L));
     }
 
     @Test
@@ -180,7 +180,7 @@ public class BankDataStoreTest {
     public void testGetAllTransactionInfoOnAccount() {
         dataStore.makeAccount(1);
         TransactionInfo tInfo = new TransactionInfo(0L, 1L, 100.0);
-        dataStore.storeTransactionInfo(tInfo);
+        dataStore.storeTransactionInfo(tInfo, 0L);
         List<TransactionInfo> transactions = dataStore.getAllTransactionInfo(0L);
         Assert.assertEquals(tInfo, transactions.get(0));
     }

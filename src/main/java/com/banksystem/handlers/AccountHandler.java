@@ -27,10 +27,17 @@ public class AccountHandler {
 
     public void depositMoney(long accountNumber, double amount) throws NegativeDepositException, AccountLockedException {
         getAccount(accountNumber).depositMoney(amount);
+        TransactionInfo tInfo = new TransactionInfo(accountNumber,
+                accountNumber, amount);
+        bankDataStore.storeTransactionInfo(tInfo, accountNumber);
     }
 
     public void withdrawMoney(long accountNumber, double amount) throws AccountLockedException, WithdrawalExceedsBalance {
         getAccount(accountNumber).withdrawMoney(amount);
+        //Withdraws should be stored as negative amounts
+        TransactionInfo tInfo = new TransactionInfo(accountNumber,
+                accountNumber, -amount);
+        bankDataStore.storeTransactionInfo(tInfo, accountNumber);
     }
 
     public void transferMoney(long fromAccountNumber, long toAccountNumber, double amount) throws AccountLockedException, WithdrawalExceedsBalance, NegativeDepositException {
@@ -39,9 +46,12 @@ public class AccountHandler {
         //Transaction
         toAccount.depositMoney(fromAccount.withdrawMoney(amount));
         //If no exception was thrown save transaction
-        TransactionInfo tInfo = new TransactionInfo(fromAccount.getAccountNumber(),
-                toAccount.getAccountNumber(), amount);
-        bankDataStore.storeTransactionInfo(tInfo);
+        TransactionInfo tInfo = new TransactionInfo(fromAccountNumber,
+                toAccountNumber, -amount);
+        bankDataStore.storeTransactionInfo(tInfo, fromAccountNumber);
+        tInfo = new TransactionInfo(fromAccountNumber,
+                toAccountNumber, amount);
+        bankDataStore.storeTransactionInfo(tInfo, toAccountNumber);
     }
 
     public List<TransactionInfo> getTransactionsLog(long accountNumber) {

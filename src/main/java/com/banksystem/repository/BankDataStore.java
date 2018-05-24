@@ -83,8 +83,8 @@ public class BankDataStore {
     }
 
 
-    public boolean storeTransactionInfo(TransactionInfo tInfo) {
-        List<TransactionInfo> accountTransactions = transactions.get(tInfo.getFromAccountNumber());
+    public boolean storeTransactionInfo(TransactionInfo tInfo, long accountNumber) {
+        List<TransactionInfo> accountTransactions = transactions.get(accountNumber);
         return accountTransactions.add(tInfo);
     }
 
