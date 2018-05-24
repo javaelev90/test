@@ -3,6 +3,8 @@ package com.banksystem.model;
 import com.banksystem.Exceptions.NegativeDepositException;
 import com.banksystem.Exceptions.WithdrawalExceedsBalance;
 
+import javax.security.auth.login.AccountLockedException;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
@@ -12,6 +14,7 @@ public class BankAccount {
     private int userId;
     private long accountNumber;
     private volatile double accountBalance;
+    private AtomicBoolean isLocked;
 
     private ReadWriteLock lock;
     private Lock readLock;
@@ -21,17 +24,20 @@ public class BankAccount {
         this.accountNumber = accountNumber;
         this.userId = userId;
         accountBalance = 0.0;
+        isLocked = new AtomicBoolean(false);
         lock = new ReentrantReadWriteLock();
         readLock = lock.readLock();
         writeLock = lock.writeLock();
-
     }
 
     public long getAccountNumber() {
         return accountNumber;
     }
 
-    public synchronized double getAccountBalance() {
+    public synchronized double getAccountBalance() throws AccountLockedException {
+        if(isLocked.get()){
+            throw new AccountLockedException();
+        }
         try{
             readLock.lock();
             return accountBalance;
@@ -40,7 +46,10 @@ public class BankAccount {
         }
     }
 
-    public synchronized void depositMoney(double deposit) throws NegativeDepositException{
+    public synchronized void depositMoney(double deposit) throws NegativeDepositException, AccountLockedException {
+        if(isLocked.get()){
+            throw new AccountLockedException();
+        }
         if(deposit < 0) throw new NegativeDepositException();
         try{
             writeLock.lock();
@@ -51,7 +60,10 @@ public class BankAccount {
 
     }
 
-    public synchronized double withdrawMoney(double withdrawal) throws WithdrawalExceedsBalance {
+    public synchronized double withdrawMoney(double withdrawal) throws WithdrawalExceedsBalance, AccountLockedException {
+        if(isLocked.get()){
+            throw new AccountLockedException();
+        }
         if(withdrawal > accountBalance) throw new WithdrawalExceedsBalance();
         try{
             writeLock.lock();
@@ -64,6 +76,14 @@ public class BankAccount {
 
     public int getUserId(){
         return userId;
+    }
+
+    public void lock(){
+        isLocked.set(true);
+    }
+
+    public void unlock(){
+        isLocked.set(false);
     }
 
 }

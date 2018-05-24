@@ -8,6 +8,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import javax.security.auth.login.AccountLockedException;
 import java.util.concurrent.*;
 
 
@@ -27,19 +28,19 @@ public class BankAccountTest {
     }
 
     @Test
-    public void testCanMakeBankAccount(){
+    public void testCanMakeBankAccount() throws AccountLockedException {
         Assert.assertEquals(888777666555L, bankAccount.getAccountNumber());
         MatcherAssert.assertThat(0.0, CoreMatchers.equalTo(bankAccount.getAccountBalance()));
     }
 
     @Test
-    public void testDepositMoney() throws NegativeDepositException{
+    public void testDepositMoney() throws NegativeDepositException, AccountLockedException {
         bankAccount.depositMoney(100.0);
         MatcherAssert.assertThat(100.0, CoreMatchers.equalTo(bankAccount.getAccountBalance()));
     }
 
     @Test
-    public void testThreadSafeDeposit() throws InterruptedException{
+    public void testThreadSafeDeposit() throws InterruptedException, AccountLockedException {
         ExecutorService executorService = Executors.newFixedThreadPool(1000);
         CountDownLatch latch = new CountDownLatch(1);
         for(int i = 0; i < 1000; i++){
@@ -50,6 +51,8 @@ public class BankAccountTest {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 } catch (NegativeDepositException e){
+                    e.printStackTrace();
+                } catch (AccountLockedException e) {
                     e.printStackTrace();
                 }
             });
@@ -62,25 +65,25 @@ public class BankAccountTest {
     }
 
     @Test(expected = NegativeDepositException.class)
-    public void testDepositNegativeAmount() throws NegativeDepositException{
+    public void testDepositNegativeAmount() throws NegativeDepositException, AccountLockedException {
         bankAccount.depositMoney(-1.0);
     }
 
     @Test
-    public void testWithdrawMoney() throws NegativeDepositException, WithdrawalExceedsBalance {
+    public void testWithdrawMoney() throws NegativeDepositException, WithdrawalExceedsBalance, AccountLockedException {
         bankAccount.depositMoney(100.0);
         bankAccount.withdrawMoney(50.0);
         MatcherAssert.assertThat(50.0, CoreMatchers.equalTo(bankAccount.getAccountBalance()));
     }
 
     @Test(expected = WithdrawalExceedsBalance.class)
-    public void testWithdrawMoreThanBalance() throws NegativeDepositException, WithdrawalExceedsBalance{
+    public void testWithdrawMoreThanBalance() throws NegativeDepositException, WithdrawalExceedsBalance, AccountLockedException {
         bankAccount.depositMoney(100.0);
         bankAccount.withdrawMoney(101.0);
     }
 
     @Test
-    public void testWithdrawalIsThreadSafe() throws InterruptedException, NegativeDepositException{
+    public void testWithdrawalIsThreadSafe() throws InterruptedException, NegativeDepositException, AccountLockedException {
         ExecutorService executorService = Executors.newFixedThreadPool(1000);
         bankAccount.depositMoney(1000.0);
         CountDownLatch latch = new CountDownLatch(1);
@@ -93,6 +96,8 @@ public class BankAccountTest {
                     e.printStackTrace();
                 } catch (WithdrawalExceedsBalance e){
                     e.printStackTrace();
+                } catch (AccountLockedException e) {
+                    e.printStackTrace();
                 }
             });
         }
@@ -102,6 +107,47 @@ public class BankAccountTest {
         MatcherAssert.assertThat(bankAccount.getAccountBalance(), CoreMatchers.equalTo(0.0));
     }
 
+    @Test(expected = AccountLockedException.class)
+    public void testWithdrawMoneyWhenAccountLocked() throws AccountLockedException, WithdrawalExceedsBalance {
+        bankAccount.lock();
+        bankAccount.withdrawMoney(10.0);
+    }
 
+    @Test(expected = AccountLockedException.class)
+    public void testDepositMoneyWhenAccountLocked() throws NegativeDepositException, AccountLockedException {
+        bankAccount.lock();
+        bankAccount.depositMoney(100.0);
 
+    }
+
+    @Test(expected = AccountLockedException.class)
+    public void testCheckBalanceWhenAccountLocked() throws AccountLockedException {
+        bankAccount.lock();
+        bankAccount.getAccountBalance();
+    }
+
+    @Test
+    public void testCheckBalanceAfterAccountUnlocked() throws NegativeDepositException, AccountLockedException, WithdrawalExceedsBalance {
+        bankAccount.lock();
+        bankAccount.unlock();
+        MatcherAssert.assertThat(bankAccount.getAccountBalance(), CoreMatchers.equalTo(0.0));
+    }
+
+    @Test
+    public void testWithdrawMoneyAfterAccountUnlocked() throws NegativeDepositException, AccountLockedException, WithdrawalExceedsBalance {
+        bankAccount.depositMoney(100.0);
+        bankAccount.lock();
+        bankAccount.unlock();
+        bankAccount.withdrawMoney(10.0);
+        MatcherAssert.assertThat(bankAccount.getAccountBalance(), CoreMatchers.equalTo(90.0));
+    }
+
+    @Test
+    public void testDepositMoneyAfterAccountUnlocked() throws NegativeDepositException, AccountLockedException {
+
+        bankAccount.lock();
+        bankAccount.unlock();
+        bankAccount.depositMoney(100.0);
+        MatcherAssert.assertThat(bankAccount.getAccountBalance(), CoreMatchers.equalTo(100.0));
+    }
 }
