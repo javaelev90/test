@@ -26,12 +26,13 @@ public class AccountHandlerTest {
     }
 
     /**
-     * This has to be done since id is a static value that keeps increasing
+     * Resets the static bank number counter which keeps incrementing when accounts are created
+     * which also persists through tests
      * @throws NoSuchFieldException
      * @throws IllegalAccessException
      */
     @Before
-    public void resetBankDataStoreId() throws NoSuchFieldException, IllegalAccessException {
+    public void resetStaticBankAccountNumber() throws NoSuchFieldException, IllegalAccessException {
         bankDataStore = new BankDataStore();
         Field field = BankDataStore.class.getDeclaredField("BANK_ACCOUNT_COUNTER");
         field.setAccessible(true);

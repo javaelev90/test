@@ -7,7 +7,6 @@ import com.banksystem.model.TransactionInfo;
 import com.banksystem.repository.BankDataStore;
 
 import javax.security.auth.login.AccountLockedException;
-import java.util.Arrays;
 import java.util.List;
 
 public class AccountHandler {
@@ -48,9 +47,12 @@ public class AccountHandler {
     public List<TransactionInfo> getTransactionsLog(long accountNumber) {
         return bankDataStore.getAllTransactionInfo(accountNumber);
     }
-    
 
+    public void lockAccount(long accountNumber){
+        getAccount(accountNumber).lock();
+    }
 
-    //lock account
-
+    public void unlockAccount(long accountNumber){
+        getAccount(accountNumber).unlock();
+    }
 }
