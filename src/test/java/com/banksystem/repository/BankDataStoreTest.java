@@ -116,7 +116,7 @@ public class BankDataStoreTest {
         executorService.shutdown();
         assert executorService.awaitTermination(10, TimeUnit.SECONDS);
 
-        List<BankAccount> accounts = dataStore.getAllBankAccounts(4);
+        List<BankAccount> accounts = dataStore.getAllBankAccountsForUser(4);
         Assert.assertEquals(1000, accounts.size());
     }
 
@@ -150,7 +150,7 @@ public class BankDataStoreTest {
         user.setId(1);
         long accountNum1 = dataStore.makeAccount(user.getId());
         long accountNum2 = dataStore.makeAccount(user.getId());
-        List<BankAccount> accounts = dataStore.getAllBankAccounts(user.getId());
+        List<BankAccount> accounts = dataStore.getAllBankAccountsForUser(user.getId());
         Assert.assertEquals(accountNum1, accounts.get(0).getAccountNumber());
         Assert.assertEquals(accountNum2, accounts.get(1).getAccountNumber());
     }
@@ -158,7 +158,7 @@ public class BankDataStoreTest {
     @Test
     public void testGetAllBankAccountsForInvalidId() {
         //No user has been created so there should be no accounts with this user ID
-        List<BankAccount> accounts = dataStore.getAllBankAccounts(1);
+        List<BankAccount> accounts = dataStore.getAllBankAccountsForUser(1);
         Assert.assertNull(accounts);
     }
 

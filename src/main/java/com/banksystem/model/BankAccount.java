@@ -86,5 +86,12 @@ public class BankAccount {
         isLocked.set(false);
     }
 
+    public String toString(){
+        return "Account number: "+accountNumber+"\n"+
+                "User Id: "+ userId + "\n"+
+                "Balance: "+accountBalance +"\n"+
+                "Account locked: "+ isLocked.get() +"\n";
+    }
+
 }
 

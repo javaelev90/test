@@ -72,7 +72,7 @@ public class BankDataStore {
     }
 
 
-    public List<BankAccount> getAllBankAccounts(int userId) {
+    public List<BankAccount> getAllBankAccountsForUser(int userId) {
         List<Long> accountNumbers = bank.get(userId);
         if(accountNumbers == null){
             return null;
