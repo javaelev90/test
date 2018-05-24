@@ -16,7 +16,6 @@ public class BankAccount {
     private volatile double accountBalance;
     private AtomicBoolean isLocked;
 
-    private ReadWriteLock lock;
     private Lock readLock;
     private Lock writeLock;
 
@@ -25,7 +24,7 @@ public class BankAccount {
         this.userId = userId;
         accountBalance = 0.0;
         isLocked = new AtomicBoolean(false);
-        lock = new ReentrantReadWriteLock();
+        ReadWriteLock lock = new ReentrantReadWriteLock();
         readLock = lock.readLock();
         writeLock = lock.writeLock();
     }
