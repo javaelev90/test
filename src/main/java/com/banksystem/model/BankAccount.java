@@ -1,7 +1,7 @@
 package com.banksystem.model;
 
 import com.banksystem.Exceptions.NegativeDepositException;
-import com.banksystem.Exceptions.WithdrawalExceedsBalance;
+import com.banksystem.Exceptions.WithdrawalExceedsBalanceException;
 
 import javax.security.auth.login.AccountLockedException;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -33,10 +33,7 @@ public class BankAccount {
         return accountNumber;
     }
 
-    public synchronized double getAccountBalance() throws AccountLockedException {
-        if(isLocked.get()){
-            throw new AccountLockedException();
-        }
+    public double getAccountBalance() {
         try{
             readLock.lock();
             return accountBalance;
@@ -45,11 +42,8 @@ public class BankAccount {
         }
     }
 
-    public synchronized void depositMoney(double deposit) throws NegativeDepositException, AccountLockedException {
-        if(isLocked.get()){
-            throw new AccountLockedException();
-        }
-        if(deposit < 0) throw new NegativeDepositException();
+    public void depositMoney(double deposit) throws NegativeDepositException {
+        if(deposit < 0) throw new NegativeDepositException(""+accountNumber);
         try{
             writeLock.lock();
             accountBalance += deposit;
@@ -59,11 +53,11 @@ public class BankAccount {
 
     }
 
-    public synchronized double withdrawMoney(double withdrawal) throws WithdrawalExceedsBalance, AccountLockedException {
+    public double withdrawMoney(double withdrawal) throws WithdrawalExceedsBalanceException, AccountLockedException {
         if(isLocked.get()){
-            throw new AccountLockedException();
+            throw new AccountLockedException(""+accountNumber);
         }
-        if(withdrawal > accountBalance) throw new WithdrawalExceedsBalance();
+        if(withdrawal > accountBalance) throw new WithdrawalExceedsBalanceException(""+accountNumber);
         try{
             writeLock.lock();
             accountBalance -= withdrawal;

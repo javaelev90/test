@@ -1,34 +1,38 @@
 package com.banksystem.model;
 
+import java.time.LocalDateTime;
+
 /**
- * Used to store information about all transactions
+ * Used to store information about a transaction, the amount and the time
  *
- * If fromAccountNumber and toAccountNumber is the same it means
- * it's the user who deposited or withdrew money for the same account
  *
  * The transfer amount will be negative for withdraws and positive for deposits
  */
 public class TransactionInfo {
 
-    private long fromAccountNumber;
-    private long toAccountNumber;
     private double transferAmount;
+    private String message;
+    private LocalDateTime transactionDate;
 
-    public TransactionInfo(long fromAccountNumber, long toAccountNumber, double transferAmount) {
-        this.fromAccountNumber = fromAccountNumber;
-        this.toAccountNumber = toAccountNumber;
+    public TransactionInfo(String message, double transferAmount, LocalDateTime localDateTime) {
+        this.message = message;
         this.transferAmount = transferAmount;
+        transactionDate = localDateTime;
     }
-
-    public long getFromAccountNumber() {
-        return fromAccountNumber;
-    }
-
-    public long getToAccountNumber() {
-        return toAccountNumber;
-    }
-
     public double getTransferAmount() {
         return transferAmount;
+    }
+
+    public LocalDateTime getTransactionDate(){
+        return transactionDate;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+
+    public String toString(){
+        return "Amount: "+ transferAmount+" | "+"Time: "+transactionDate.toString()+" | "+"Message: "+message;
     }
 }
