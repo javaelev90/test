@@ -9,7 +9,12 @@ import org.junit.Before;
 import org.junit.Test;
 
 import javax.security.auth.login.AccountLockedException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.*;
+import java.util.stream.IntStream;
+
+import static junit.framework.TestCase.fail;
 
 
 public class BankAccountTest {
@@ -28,42 +33,39 @@ public class BankAccountTest {
     }
 
     @Test
-    public void testCanMakeBankAccount() throws AccountLockedException {
+    public void testCanMakeBankAccount()  {
         Assert.assertEquals(888777666555L, bankAccount.getAccountNumber());
         MatcherAssert.assertThat(0.0, CoreMatchers.equalTo(bankAccount.getAccountBalance()));
     }
 
     @Test
-    public void testDepositMoney() throws NegativeDepositException, AccountLockedException {
+    public void testDepositMoney() throws NegativeDepositException {
         bankAccount.depositMoney(100.0);
         MatcherAssert.assertThat(100.0, CoreMatchers.equalTo(bankAccount.getAccountBalance()));
     }
 
     @Test
-    public void testThreadSafeDeposit() throws InterruptedException, AccountLockedException {
+    public void testThreadSafeDeposit() throws InterruptedException {
         ExecutorService executorService = Executors.newFixedThreadPool(1000);
-        CountDownLatch latch = new CountDownLatch(1);
-        for(int i = 0; i < 1000; i++){
-            executorService.submit(() -> {
-                try {
-                    latch.await();
-                    bankAccount.depositMoney(10.0);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                } catch (NegativeDepositException e){
-                    e.printStackTrace();
+        List<Callable<Object>> callables = new ArrayList<>();
+        IntStream.range(0, 1000).forEach(i -> callables.add(() -> {
+                    try {
+                        bankAccount.depositMoney(1.0);
+                    } catch (NegativeDepositException e){
+                        fail("The test threw an exception "+e.toString());
+                    }
+                    return 0;
                 }
-            });
-        }
-        latch.countDown();
+        ));
+        executorService.invokeAll(callables);
         executorService.shutdown();
         assert executorService.awaitTermination(10, TimeUnit.SECONDS);
 
-        MatcherAssert.assertThat(10000.0, CoreMatchers.equalTo(bankAccount.getAccountBalance()));
+        MatcherAssert.assertThat(1000.0, CoreMatchers.equalTo(bankAccount.getAccountBalance()));
     }
 
     @Test(expected = NegativeDepositException.class)
-    public void testDepositNegativeAmount() throws NegativeDepositException, AccountLockedException {
+    public void testDepositNegativeAmount() throws NegativeDepositException {
         bankAccount.depositMoney(-1.0);
     }
 
@@ -81,25 +83,23 @@ public class BankAccountTest {
     }
 
     @Test
-    public void testWithdrawalIsThreadSafe() throws InterruptedException, NegativeDepositException, AccountLockedException {
+    public void testWithdrawalIsThreadSafe() throws InterruptedException, NegativeDepositException {
         ExecutorService executorService = Executors.newFixedThreadPool(1000);
         bankAccount.depositMoney(1000.0);
-        CountDownLatch latch = new CountDownLatch(1);
-        for(int i = 0; i < 1000; i++){
-            executorService.submit(() -> {
+
+        List<Callable<Object>> callables = new ArrayList<>();
+        IntStream.range(0, 1000).forEach(i -> callables.add(() -> {
                 try {
-                    latch.await();
                     bankAccount.withdrawMoney(1.0);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
                 } catch (WithdrawalExceedsBalance e){
-                    e.printStackTrace();
+                    fail("The test threw an exception "+e.toString());
                 } catch (AccountLockedException e) {
-                    e.printStackTrace();
+                    fail("The test threw an exception "+e.toString());
                 }
-            });
-        }
-        latch.countDown();
+                return 0;
+            }
+        ));
+        executorService.invokeAll(callables);
         executorService.shutdown();
         assert executorService.awaitTermination(10, TimeUnit.SECONDS);
         MatcherAssert.assertThat(bankAccount.getAccountBalance(), CoreMatchers.equalTo(0.0));
@@ -112,21 +112,21 @@ public class BankAccountTest {
     }
 
     @Test
-    public void testDepositMoneyWhenAccountLocked() throws NegativeDepositException, AccountLockedException {
+    public void testDepositMoneyWhenAccountLocked() throws NegativeDepositException{
         bankAccount.lock();
         bankAccount.depositMoney(100.0);
         MatcherAssert.assertThat(bankAccount.getAccountBalance(), CoreMatchers.equalTo(100.0));
     }
 
     @Test
-    public void testCheckBalanceWhenAccountLocked() throws AccountLockedException {
+    public void testCheckBalanceWhenAccountLocked() {
         bankAccount.lock();
         bankAccount.getAccountBalance();
         MatcherAssert.assertThat(bankAccount.getAccountBalance(), CoreMatchers.equalTo(0.0));
     }
 
     @Test
-    public void testCheckBalanceAfterAccountUnlocked() throws NegativeDepositException, AccountLockedException, WithdrawalExceedsBalance {
+    public void testCheckBalanceAfterAccountUnlocked() {
         bankAccount.lock();
         bankAccount.unlock();
         MatcherAssert.assertThat(bankAccount.getAccountBalance(), CoreMatchers.equalTo(0.0));
@@ -142,7 +142,7 @@ public class BankAccountTest {
     }
 
     @Test
-    public void testDepositMoneyAfterAccountUnlocked() throws NegativeDepositException, AccountLockedException {
+    public void testDepositMoneyAfterAccountUnlocked() throws NegativeDepositException {
 
         bankAccount.lock();
         bankAccount.unlock();

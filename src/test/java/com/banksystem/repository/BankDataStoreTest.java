@@ -1,21 +1,27 @@
 package com.banksystem.repository;
 
+import com.banksystem.Exceptions.NegativeDepositException;
+import com.banksystem.Exceptions.WithdrawalExceedsBalance;
 import com.banksystem.model.BankAccount;
 import com.banksystem.model.TransactionInfo;
 import com.banksystem.model.User;
+import org.hamcrest.CoreMatchers;
+import org.hamcrest.MatcherAssert;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import javax.security.auth.login.AccountLockedException;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.time.LocalDateTime;
+import java.util.*;
 import java.util.concurrent.*;
+import java.util.stream.IntStream;
+
+import static junit.framework.TestCase.fail;
 
 public class BankDataStoreTest {
 
@@ -41,6 +47,7 @@ public class BankDataStoreTest {
         Method generateBankAccountNumber = BankDataStore.class.getDeclaredMethod("generateBankAccountNumber");
         generateBankAccountNumber.setAccessible(true);
         long genValue = (long) generateBankAccountNumber.invoke(dataStore);
+        Assert.assertEquals(0L, genValue);
     }
 
     @Test
@@ -49,34 +56,30 @@ public class BankDataStoreTest {
 
         Method generateBankAccountNumber = BankDataStore.class.getDeclaredMethod("generateBankAccountNumber");
         generateBankAccountNumber.setAccessible(true);
-        ExecutorService executorService = Executors.newFixedThreadPool(1000);
-        CountDownLatch latch = new CountDownLatch(1);
-        Set set = Collections.synchronizedSet(new HashSet());
 
-        for (int i = 0; i < 1000; i++) {
-            executorService.submit(() -> {
+        Set<Long> set = Collections.synchronizedSet(new HashSet<>());
+
+        ExecutorService executorService = Executors.newFixedThreadPool(5000);
+
+        List<Callable<Object>> callables = new ArrayList<>();
+        IntStream.range(0, 5000).forEach(i -> callables.add(() -> {
                 long genValue = 0;
                 try {
-                    latch.await();
                     genValue = (long) generateBankAccountNumber.invoke(dataStore);
-                } catch (IllegalAccessException e) {
-                    e.printStackTrace();
-                } catch (InvocationTargetException e) {
-                    e.printStackTrace();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+                } catch (IllegalAccessException | InvocationTargetException e) {
+                    fail("The test threw an exception "+e.toString());
                 }
-                set.add(genValue);
+            return set.add(genValue);
+            }
+        ));
+        executorService.invokeAll(callables);
 
-            });
-        }
-        latch.countDown();
         executorService.shutdown();
         assert executorService.awaitTermination(10, TimeUnit.SECONDS);
         //If the generation of bank accounts was done in a synchronized manner the set would
         //contain an equal amount of bank account numbers to the number of calls the generate
         //bank account number method would have gotten.
-        Assert.assertEquals(1000, set.size());
+        Assert.assertEquals(5000, set.size());
 
     }
 
@@ -97,27 +100,22 @@ public class BankDataStoreTest {
 
     @Test
     public void testIsMakeAccountThreadSafeForSameUser() throws InterruptedException {
-        ExecutorService executorService = Executors.newFixedThreadPool(1000);
-        CountDownLatch latch = new CountDownLatch(1);
 
-        for (int i = 0; i < 1000; i++) {
-            executorService.submit(() -> {
-                long genValue = 0;
-                try {
-                    latch.await();
-                    dataStore.makeAccount(4);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+        ExecutorService executorService = Executors.newFixedThreadPool(5000);
 
-            });
-        }
-        latch.countDown();
+        List<Callable<Object>> callables = new ArrayList<>();
+        IntStream.range(0, 5000).forEach(i -> callables.add(() -> {
+                dataStore.makeAccount(4);
+                return 0;
+            }
+        ));
+        executorService.invokeAll(callables);
+
         executorService.shutdown();
         assert executorService.awaitTermination(10, TimeUnit.SECONDS);
 
         List<BankAccount> accounts = dataStore.getAllBankAccountsForUser(4);
-        Assert.assertEquals(1000, accounts.size());
+        Assert.assertEquals(5000, accounts.size());
     }
 
     @Test
@@ -153,6 +151,7 @@ public class BankDataStoreTest {
         List<BankAccount> accounts = dataStore.getAllBankAccountsForUser(user.getId());
         Assert.assertEquals(accountNum1, accounts.get(0).getAccountNumber());
         Assert.assertEquals(accountNum2, accounts.get(1).getAccountNumber());
+        Assert.assertEquals(2, accounts.size());
     }
 
     @Test
@@ -165,7 +164,7 @@ public class BankDataStoreTest {
     @Test
     public void testCanStoreTransactionInfo() {
         dataStore.makeAccount(1);
-        TransactionInfo tInfo = new TransactionInfo(0L, 1L, 100.0);
+        TransactionInfo tInfo = new TransactionInfo("deposit", 100.0, LocalDateTime.now());
         Assert.assertTrue(dataStore.storeTransactionInfo(tInfo, 0L));
     }
 
@@ -179,10 +178,16 @@ public class BankDataStoreTest {
     @Test
     public void testGetAllTransactionInfoOnAccount() {
         dataStore.makeAccount(1);
-        TransactionInfo tInfo = new TransactionInfo(0L, 1L, 100.0);
+        LocalDateTime localDateTime = LocalDateTime.now();
+        String message = "deposit";
+        double amount = 100.0;
+        TransactionInfo tInfo = new TransactionInfo(message, amount, localDateTime);
         dataStore.storeTransactionInfo(tInfo, 0L);
         List<TransactionInfo> transactions = dataStore.getAllTransactionInfo(0L);
-        Assert.assertEquals(tInfo, transactions.get(0));
+        Assert.assertEquals(localDateTime, transactions.get(0).getTransactionDate());
+        Assert.assertEquals(message, transactions.get(0).getMessage());
+        MatcherAssert.assertThat(amount, CoreMatchers.equalTo(transactions.get(0).getTransferAmount()));
+
     }
 
     @Test

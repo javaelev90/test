@@ -7,14 +7,23 @@ import com.banksystem.model.TransactionInfo;
 import com.banksystem.repository.BankDataStore;
 
 import javax.security.auth.login.AccountLockedException;
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class AccountHandler {
 
     private BankDataStore bankDataStore;
+    // This lock is not really necessary for this application since
+    // it's only used to store transactionInfo sequentially in bankDataStore.
+    // This is not needed since each transaction has a timestamp so they could be
+    // ordered after timestamp when needed.
+    private ReentrantLock lock;
 
     public AccountHandler(BankDataStore bankDataStore){
         this.bankDataStore = bankDataStore;
+
+        lock = new ReentrantLock();
     }
 
     public List<BankAccount> getAllAccountsForUser(int userId) {
@@ -26,32 +35,52 @@ public class AccountHandler {
     }
 
     public void depositMoney(long accountNumber, double amount) throws NegativeDepositException {
-        getAccount(accountNumber).depositMoney(amount);
-        TransactionInfo tInfo = new TransactionInfo(accountNumber,
-                accountNumber, amount);
-        bankDataStore.storeTransactionInfo(tInfo, accountNumber);
+
+        try {
+            lock.lock();
+
+            getAccount(accountNumber).depositMoney(amount);
+
+            LocalDateTime localDateTime = LocalDateTime.now();
+            TransactionInfo tInfo = new TransactionInfo("Deposit" , amount, localDateTime);
+            bankDataStore.storeTransactionInfo(tInfo, accountNumber);
+        } finally {
+            lock.unlock();
+        }
     }
 
     public void withdrawMoney(long accountNumber, double amount) throws AccountLockedException, WithdrawalExceedsBalance {
-        getAccount(accountNumber).withdrawMoney(amount);
-        //Withdraws should be stored as negative amounts
-        TransactionInfo tInfo = new TransactionInfo(accountNumber,
-                accountNumber, -amount);
-        bankDataStore.storeTransactionInfo(tInfo, accountNumber);
+
+        try {
+            lock.lock();
+            getAccount(accountNumber).withdrawMoney(amount);
+
+            //Withdraws should be stored as negative amounts
+            LocalDateTime localDateTime = LocalDateTime.now();
+            TransactionInfo tInfo = new TransactionInfo("Withdraw", -amount, localDateTime);
+            bankDataStore.storeTransactionInfo(tInfo, accountNumber);
+        } finally {
+            lock.unlock();
+        }
     }
 
     public void transferMoney(long fromAccountNumber, long toAccountNumber, double amount) throws AccountLockedException, WithdrawalExceedsBalance, NegativeDepositException {
         BankAccount fromAccount = getAccount(fromAccountNumber);
         BankAccount toAccount = getAccount(toAccountNumber);
         //Transaction
-        toAccount.depositMoney(fromAccount.withdrawMoney(amount));
-        //If no exception was thrown save transaction
-        TransactionInfo tInfo = new TransactionInfo(fromAccountNumber,
-                toAccountNumber, -amount);
-        bankDataStore.storeTransactionInfo(tInfo, fromAccountNumber);
-        tInfo = new TransactionInfo(fromAccountNumber,
-                toAccountNumber, amount);
-        bankDataStore.storeTransactionInfo(tInfo, toAccountNumber);
+        try{
+            lock.lock();
+            toAccount.depositMoney(fromAccount.withdrawMoney(amount));
+            //If no exception was thrown save transaction
+            LocalDateTime localDateTime = LocalDateTime.now();
+            TransactionInfo tInfo = new TransactionInfo("Transfer-Withdraw", -amount, localDateTime);
+            bankDataStore.storeTransactionInfo(tInfo, fromAccountNumber);
+            tInfo = new TransactionInfo("Transfer-Deposit", amount, localDateTime);
+            bankDataStore.storeTransactionInfo(tInfo, toAccountNumber);
+        } finally {
+            lock.unlock();
+        }
+
     }
 
     public List<TransactionInfo> getTransactionsLog(long accountNumber) {

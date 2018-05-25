@@ -43,7 +43,7 @@ public class BankAccount {
     }
 
     public void depositMoney(double deposit) throws NegativeDepositException {
-        if(deposit < 0) throw new NegativeDepositException();
+        if(deposit < 0) throw new NegativeDepositException(""+accountNumber);
         try{
             writeLock.lock();
             accountBalance += deposit;
@@ -55,9 +55,9 @@ public class BankAccount {
 
     public double withdrawMoney(double withdrawal) throws WithdrawalExceedsBalance, AccountLockedException {
         if(isLocked.get()){
-            throw new AccountLockedException();
+            throw new AccountLockedException(""+accountNumber);
         }
-        if(withdrawal > accountBalance) throw new WithdrawalExceedsBalance();
+        if(withdrawal > accountBalance) throw new WithdrawalExceedsBalance(""+accountNumber);
         try{
             writeLock.lock();
             accountBalance -= withdrawal;

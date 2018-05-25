@@ -5,14 +5,19 @@ import org.hamcrest.MatcherAssert;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.time.LocalDateTime;
+
 public class TransactionInfoTest {
 
     @Test
     public void testCanMakeTransactionInfoObject(){
-        TransactionInfo transactionInfo = new TransactionInfo(1L, 2L, 100.0);
-        Assert.assertEquals(1L, transactionInfo.getFromAccountNumber());
-        Assert.assertEquals(2L, transactionInfo.getToAccountNumber());
+        LocalDateTime datetime = LocalDateTime.now();
+        TransactionInfo transactionInfo = new TransactionInfo("Insättning",100.0, datetime);
+        Assert.assertEquals("Insättning", transactionInfo.getMessage());
+
+        Assert.assertTrue(transactionInfo.getTransactionDate().isEqual(datetime));
         MatcherAssert.assertThat(100.0, CoreMatchers.equalTo(100.0));
+
     }
 
 }

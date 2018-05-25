@@ -4,6 +4,7 @@ import com.banksystem.Exceptions.NegativeDepositException;
 import com.banksystem.Exceptions.WithdrawalExceedsBalance;
 import com.banksystem.handlers.AccountHandler;
 import com.banksystem.model.BankAccount;
+import com.banksystem.model.TransactionInfo;
 import com.banksystem.model.User;
 
 import javax.security.auth.login.AccountLockedException;
@@ -49,6 +50,7 @@ public class ConsoleUI {
                         printBalanceSpecificAccount(accountHandler.getAccount(accountNumber));
                         break;
                     case 4:
+                        showTransActionsForAccount(reader);
                         break;
                     case 5:
                         depositMoney(reader);
@@ -83,6 +85,23 @@ public class ConsoleUI {
             System.err.println("An "+e.toString()+" was thrown when reading from system in.");
         }
 
+    }
+
+    private int showTransActionsForAccount(InputReader reader) {
+        long accountNumber = enterBankAccountNumber(reader);
+        if(accountNumber == -1){
+            return -1;
+        }
+        List<TransactionInfo> transactionInfoList = accountHandler.getTransactionsLog(accountNumber);
+        if(transactionInfoList == null || transactionInfoList.isEmpty()){
+            System.out.println("No transactions for that account.");
+            return -1;
+        }
+        System.out.println("Transaction history for account: "+accountNumber);
+        transactionInfoList.forEach(tInfo ->
+                System.out.println("-"+tInfo.toString())
+        );
+        return 0;
     }
 
     private int unlockAccount(InputReader reader) {
@@ -121,7 +140,7 @@ public class ConsoleUI {
         try {
             accountHandler.transferMoney(fromAccount, toAccount, amount);
         }  catch (AccountLockedException e) {
-            System.out.println("That account is locked.");
+            System.out.println("Account "+e.getMessage()+" is locked.");
         } catch (WithdrawalExceedsBalance e) {
             System.out.println("The withdrawal exceeds funds.");
         } catch (NegativeDepositException e) {
@@ -142,7 +161,7 @@ public class ConsoleUI {
         try {
             accountHandler.withdrawMoney(accountNumber, amount);
         }  catch (AccountLockedException e) {
-            System.out.println("That account is locked.");
+            System.out.println("Account "+e.getMessage()+" is locked.");
         } catch (WithdrawalExceedsBalance e) {
             System.out.println("The withdrawal exceeds funds.");
         }
@@ -211,12 +230,10 @@ public class ConsoleUI {
     }
 
     private void printBalanceForAllAccounts(List<BankAccount> accounts){
-        accounts.forEach(account -> {
-            printBalanceSpecificAccount(account);
-        });
+        accounts.forEach(this::printBalanceSpecificAccount);
     }
 
-    public void printAccounts(List<BankAccount> accounts){
+    private void printAccounts(List<BankAccount> accounts){
         System.out.println("Accounts: ");
         accounts.forEach(e -> System.out.println(e.getAccountNumber()));
     }
