@@ -52,8 +52,6 @@ public class BankAccountTest {
                     e.printStackTrace();
                 } catch (NegativeDepositException e){
                     e.printStackTrace();
-                } catch (AccountLockedException e) {
-                    e.printStackTrace();
                 }
             });
         }
@@ -113,17 +111,18 @@ public class BankAccountTest {
         bankAccount.withdrawMoney(10.0);
     }
 
-    @Test(expected = AccountLockedException.class)
+    @Test
     public void testDepositMoneyWhenAccountLocked() throws NegativeDepositException, AccountLockedException {
         bankAccount.lock();
         bankAccount.depositMoney(100.0);
-
+        MatcherAssert.assertThat(bankAccount.getAccountBalance(), CoreMatchers.equalTo(100.0));
     }
 
-    @Test(expected = AccountLockedException.class)
+    @Test
     public void testCheckBalanceWhenAccountLocked() throws AccountLockedException {
         bankAccount.lock();
         bankAccount.getAccountBalance();
+        MatcherAssert.assertThat(bankAccount.getAccountBalance(), CoreMatchers.equalTo(0.0));
     }
 
     @Test

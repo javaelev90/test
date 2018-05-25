@@ -25,7 +25,7 @@ public class AccountHandler {
         return bankDataStore.getAccount(accountNumber);
     }
 
-    public void depositMoney(long accountNumber, double amount) throws NegativeDepositException, AccountLockedException {
+    public void depositMoney(long accountNumber, double amount) throws NegativeDepositException {
         getAccount(accountNumber).depositMoney(amount);
         TransactionInfo tInfo = new TransactionInfo(accountNumber,
                 accountNumber, amount);

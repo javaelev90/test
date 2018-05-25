@@ -33,10 +33,7 @@ public class BankAccount {
         return accountNumber;
     }
 
-    public synchronized double getAccountBalance() throws AccountLockedException {
-        if(isLocked.get()){
-            throw new AccountLockedException();
-        }
+    public double getAccountBalance() {
         try{
             readLock.lock();
             return accountBalance;
@@ -45,10 +42,7 @@ public class BankAccount {
         }
     }
 
-    public synchronized void depositMoney(double deposit) throws NegativeDepositException, AccountLockedException {
-        if(isLocked.get()){
-            throw new AccountLockedException();
-        }
+    public void depositMoney(double deposit) throws NegativeDepositException {
         if(deposit < 0) throw new NegativeDepositException();
         try{
             writeLock.lock();
@@ -59,7 +53,7 @@ public class BankAccount {
 
     }
 
-    public synchronized double withdrawMoney(double withdrawal) throws WithdrawalExceedsBalance, AccountLockedException {
+    public double withdrawMoney(double withdrawal) throws WithdrawalExceedsBalance, AccountLockedException {
         if(isLocked.get()){
             throw new AccountLockedException();
         }
