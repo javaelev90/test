@@ -4,17 +4,7 @@
     <bookmark url="file://$PROJECT_DIR$/src/main/java/com/banksystem/ui/ConsoleUI.java" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c490166f-5f2d-46ba-9034-325618fc73dd" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/banksystem/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/banksystem/App.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/banksystem/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/banksystem/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/banksystem/handlers/AccountHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/banksystem/handlers/AccountHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/banksystem/model/TransactionInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/banksystem/model/TransactionInfo.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/banksystem/repository/BankDataStore.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/banksystem/repository/BankDataStore.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/banksystem/ui/ConsoleUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/banksystem/ui/ConsoleUI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/banksystem/handlers/AccountHandlerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/banksystem/handlers/AccountHandlerTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/banksystem/repository/BankDataStoreTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/banksystem/repository/BankDataStoreTest.java" afterDir="false" />
-    </list>
+    <list default="true" id="c490166f-5f2d-46ba-9034-325618fc73dd" name="Default" comment="" />
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -52,8 +42,8 @@
       <file leaf-file-name="TransactionInfo.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/banksystem/model/TransactionInfo.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="136">
-              <caret line="8" column="79" selection-start-line="8" selection-start-column="79" selection-end-line="8" selection-end-column="79" />
+            <state relative-caret-position="34">
+              <caret line="2" column="3" lean-forward="true" selection-start-line="2" selection-start-column="3" selection-end-line="2" selection-end-column="3" />
               <folding>
                 <element signature="e#471#472#0" expanded="true" />
                 <element signature="e#511#512#0" expanded="true" />
@@ -602,7 +592,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1872" height="1096" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Messages" order="7" weight="0.3299389" />
@@ -611,7 +600,7 @@
       <window_info anchor="right" id="Capture Analysis" order="3" />
       <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
       <window_info anchor="right" id="Maven Projects" order="3" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.3282365" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.3282365" />
       <window_info anchor="bottom" id="Version Control" order="7" />
       <window_info anchor="bottom" id="Terminal" order="7" weight="0.3299389" />
       <window_info id="Capture Tool" order="2" />
@@ -943,8 +932,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/banksystem/model/TransactionInfo.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="8" column="79" selection-start-line="8" selection-start-column="79" selection-end-line="8" selection-end-column="79" />
+        <state relative-caret-position="34">
+          <caret line="2" column="3" lean-forward="true" selection-start-line="2" selection-start-column="3" selection-end-line="2" selection-end-column="3" />
           <folding>
             <element signature="e#471#472#0" expanded="true" />
             <element signature="e#511#512#0" expanded="true" />
