@@ -1,7 +1,7 @@
 package com.banksystem.handlers;
 
 import com.banksystem.Exceptions.NegativeDepositException;
-import com.banksystem.Exceptions.WithdrawalExceedsBalance;
+import com.banksystem.Exceptions.WithdrawalExceedsBalanceException;
 import com.banksystem.model.BankAccount;
 import com.banksystem.model.TransactionInfo;
 import com.banksystem.repository.BankDataStore;
@@ -49,7 +49,7 @@ public class AccountHandler {
         }
     }
 
-    public void withdrawMoney(long accountNumber, double amount) throws AccountLockedException, WithdrawalExceedsBalance {
+    public void withdrawMoney(long accountNumber, double amount) throws AccountLockedException, WithdrawalExceedsBalanceException {
 
         try {
             lock.lock();
@@ -64,7 +64,7 @@ public class AccountHandler {
         }
     }
 
-    public void transferMoney(long fromAccountNumber, long toAccountNumber, double amount) throws AccountLockedException, WithdrawalExceedsBalance, NegativeDepositException {
+    public void transferMoney(long fromAccountNumber, long toAccountNumber, double amount) throws AccountLockedException, WithdrawalExceedsBalanceException, NegativeDepositException {
         BankAccount fromAccount = getAccount(fromAccountNumber);
         BankAccount toAccount = getAccount(toAccountNumber);
         //Transaction

@@ -1,7 +1,7 @@
 package com.banksystem.ui;
 
 import com.banksystem.Exceptions.NegativeDepositException;
-import com.banksystem.Exceptions.WithdrawalExceedsBalance;
+import com.banksystem.Exceptions.WithdrawalExceedsBalanceException;
 import com.banksystem.handlers.AccountHandler;
 import com.banksystem.model.BankAccount;
 import com.banksystem.model.TransactionInfo;
@@ -141,7 +141,7 @@ public class ConsoleUI {
             accountHandler.transferMoney(fromAccount, toAccount, amount);
         }  catch (AccountLockedException e) {
             System.out.println("Account "+e.getMessage()+" is locked.");
-        } catch (WithdrawalExceedsBalance e) {
+        } catch (WithdrawalExceedsBalanceException e) {
             System.out.println("The withdrawal exceeds funds.");
         } catch (NegativeDepositException e) {
             System.out.println("You can't deposit a negative amount.");
@@ -162,7 +162,7 @@ public class ConsoleUI {
             accountHandler.withdrawMoney(accountNumber, amount);
         }  catch (AccountLockedException e) {
             System.out.println("Account "+e.getMessage()+" is locked.");
-        } catch (WithdrawalExceedsBalance e) {
+        } catch (WithdrawalExceedsBalanceException e) {
             System.out.println("The withdrawal exceeds funds.");
         }
         return 0;
