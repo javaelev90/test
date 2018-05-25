@@ -1,7 +1,7 @@
 package com.banksystem.model;
 
 import com.banksystem.Exceptions.NegativeDepositException;
-import com.banksystem.Exceptions.WithdrawalExceedsBalance;
+import com.banksystem.Exceptions.WithdrawalExceedsBalanceException;
 import org.hamcrest.CoreMatchers;
 import org.hamcrest.MatcherAssert;
 import org.junit.Assert;
@@ -70,14 +70,14 @@ public class BankAccountTest {
     }
 
     @Test
-    public void testWithdrawMoney() throws NegativeDepositException, WithdrawalExceedsBalance, AccountLockedException {
+    public void testWithdrawMoney() throws NegativeDepositException, WithdrawalExceedsBalanceException, AccountLockedException {
         bankAccount.depositMoney(100.0);
         bankAccount.withdrawMoney(50.0);
         MatcherAssert.assertThat(50.0, CoreMatchers.equalTo(bankAccount.getAccountBalance()));
     }
 
-    @Test(expected = WithdrawalExceedsBalance.class)
-    public void testWithdrawMoreThanBalance() throws NegativeDepositException, WithdrawalExceedsBalance, AccountLockedException {
+    @Test(expected = WithdrawalExceedsBalanceException.class)
+    public void testWithdrawMoreThanBalance() throws NegativeDepositException, WithdrawalExceedsBalanceException, AccountLockedException {
         bankAccount.depositMoney(100.0);
         bankAccount.withdrawMoney(101.0);
     }
@@ -91,7 +91,7 @@ public class BankAccountTest {
         IntStream.range(0, 1000).forEach(i -> callables.add(() -> {
                 try {
                     bankAccount.withdrawMoney(1.0);
-                } catch (WithdrawalExceedsBalance e){
+                } catch (WithdrawalExceedsBalanceException e){
                     fail("The test threw an exception "+e.toString());
                 } catch (AccountLockedException e) {
                     fail("The test threw an exception "+e.toString());
@@ -106,7 +106,7 @@ public class BankAccountTest {
     }
 
     @Test(expected = AccountLockedException.class)
-    public void testWithdrawMoneyWhenAccountLocked() throws AccountLockedException, WithdrawalExceedsBalance {
+    public void testWithdrawMoneyWhenAccountLocked() throws AccountLockedException, WithdrawalExceedsBalanceException {
         bankAccount.lock();
         bankAccount.withdrawMoney(10.0);
     }
@@ -133,7 +133,7 @@ public class BankAccountTest {
     }
 
     @Test
-    public void testWithdrawMoneyAfterAccountUnlocked() throws NegativeDepositException, AccountLockedException, WithdrawalExceedsBalance {
+    public void testWithdrawMoneyAfterAccountUnlocked() throws NegativeDepositException, AccountLockedException, WithdrawalExceedsBalanceException {
         bankAccount.depositMoney(100.0);
         bankAccount.lock();
         bankAccount.unlock();

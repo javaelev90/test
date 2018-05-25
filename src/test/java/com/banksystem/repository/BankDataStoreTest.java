@@ -1,7 +1,5 @@
 package com.banksystem.repository;
 
-import com.banksystem.Exceptions.NegativeDepositException;
-import com.banksystem.Exceptions.WithdrawalExceedsBalance;
 import com.banksystem.model.BankAccount;
 import com.banksystem.model.TransactionInfo;
 import com.banksystem.model.User;
@@ -12,7 +10,6 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import javax.security.auth.login.AccountLockedException;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;

@@ -1,7 +1,7 @@
 package com.banksystem.handlers;
 
 import com.banksystem.Exceptions.NegativeDepositException;
-import com.banksystem.Exceptions.WithdrawalExceedsBalance;
+import com.banksystem.Exceptions.WithdrawalExceedsBalanceException;
 import com.banksystem.model.BankAccount;
 import com.banksystem.model.TransactionInfo;
 import com.banksystem.repository.BankDataStore;
@@ -101,14 +101,14 @@ public class AccountHandlerTest {
     }
 
     @Test
-    public void testWithdrawMoneyFromAccount() throws NegativeDepositException, AccountLockedException, WithdrawalExceedsBalance {
+    public void testWithdrawMoneyFromAccount() throws NegativeDepositException, AccountLockedException, WithdrawalExceedsBalanceException {
         BankAccount account = helperMakeAccountAndAddMoneyToThenReturnIt(100.0);
         accountHandler.withdrawMoney(account.getAccountNumber(), 70.0);
         MatcherAssert.assertThat(30.0, CoreMatchers.equalTo(account.getAccountBalance()));
     }
 
     @Test
-    public void testIfWithdrawalTransactionWasSaved() throws NegativeDepositException, AccountLockedException, WithdrawalExceedsBalance {
+    public void testIfWithdrawalTransactionWasSaved() throws NegativeDepositException, AccountLockedException, WithdrawalExceedsBalanceException {
         BankAccount account = helperMakeAccountAndAddMoneyToThenReturnIt(100.0);
         accountHandler.withdrawMoney(account.getAccountNumber(), 70.0);
         List<TransactionInfo> transactionInfoList = accountHandler.getTransactionsLog(account.getAccountNumber());
@@ -125,7 +125,7 @@ public class AccountHandlerTest {
     }
 
     @Test
-    public void testTransferMoney() throws NegativeDepositException, AccountLockedException, WithdrawalExceedsBalance {
+    public void testTransferMoney() throws NegativeDepositException, AccountLockedException, WithdrawalExceedsBalanceException {
         double amount = 30.0;
         BankAccount account1 = helperMakeAccountAndAddMoneyToThenReturnIt(100.0);
         BankAccount account2 = helperMakeAccountAndAddMoneyToThenReturnIt(0.0);
@@ -136,7 +136,7 @@ public class AccountHandlerTest {
     }
 
     @Test
-    public void testGetTransactionLogForTransaction() throws NegativeDepositException, AccountLockedException, WithdrawalExceedsBalance {
+    public void testGetTransactionLogForTransaction() throws NegativeDepositException, AccountLockedException, WithdrawalExceedsBalanceException {
         double amount = 30.0;
 
         BankAccount fromAccount = helperMakeAccountAndAddMoneyToThenReturnIt(100.0);
@@ -173,7 +173,7 @@ public class AccountHandlerTest {
                 try {
                     accountHandler.transferMoney(fromAccount.getAccountNumber(),
                             toAccount.getAccountNumber(), 1.0);
-                } catch (NegativeDepositException | WithdrawalExceedsBalance e1) {
+                } catch (NegativeDepositException | WithdrawalExceedsBalanceException e1) {
                     fail("Threw exception"+e1.toString());
                 }
             return 0;
@@ -231,7 +231,7 @@ public class AccountHandlerTest {
         IntStream.range(0, 5000).forEach(i -> callables.add(() -> {
                 try {
                     accountHandler.withdrawMoney(account.getAccountNumber(), 1.0);
-                } catch (WithdrawalExceedsBalance | AccountLockedException e1 ) {
+                } catch (WithdrawalExceedsBalanceException | AccountLockedException e1 ) {
                     fail("Threw exception" + e1.toString());
                 }
             return 0;
