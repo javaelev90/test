@@ -1,5 +1,6 @@
 package com.banksystem.repository;
 
+import com.banksystem.Exceptions.NoSuchAccountException;
 import com.banksystem.model.BankAccount;
 import com.banksystem.model.TransactionInfo;
 import com.banksystem.model.User;
@@ -116,7 +117,7 @@ public class BankDataStoreTest {
     }
 
     @Test
-    public void testCanGetAccountCheckingCorrectAccountNumber() {
+    public void testCanGetAccountCheckingCorrectAccountNumber() throws NoSuchAccountException {
 
         long accountNumber = dataStore.makeAccount(4);
         BankAccount bankAccount = dataStore.getAccount(accountNumber);
@@ -125,7 +126,7 @@ public class BankDataStoreTest {
     }
 
     @Test
-    public void testCanGetAccountCheckingCorrectUserId() {
+    public void testCanGetAccountCheckingCorrectUserId() throws NoSuchAccountException {
 
         long accountNumber = dataStore.makeAccount(4);
         BankAccount bankAccount = dataStore.getAccount(accountNumber);
@@ -133,10 +134,9 @@ public class BankDataStoreTest {
         Assert.assertEquals(4, bankAccount.getUserId());
     }
 
-    @Test
-    public void testGetAccountThatDoesNotExist() {
-        BankAccount bankAccount = dataStore.getAccount(1);
-        Assert.assertNull(bankAccount);
+    @Test(expected = NoSuchAccountException.class)
+    public void testGetAccountThatDoesNotExist() throws NoSuchAccountException {
+        dataStore.getAccount(100);
     }
 
     @Test

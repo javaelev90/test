@@ -1,6 +1,7 @@
 package com.banksystem.handlers;
 
 import com.banksystem.Exceptions.NegativeDepositException;
+import com.banksystem.Exceptions.NoSuchAccountException;
 import com.banksystem.Exceptions.WithdrawalExceedsBalanceException;
 import com.banksystem.model.BankAccount;
 import com.banksystem.model.TransactionInfo;
@@ -30,17 +31,17 @@ public class AccountHandler {
         return bankDataStore.getAllBankAccountsForUser(userId);
     }
 
-    public BankAccount getAccount(long accountNumber) {
+    public BankAccount getAccount(long accountNumber) throws NoSuchAccountException {
+
         return bankDataStore.getAccount(accountNumber);
     }
 
-    public void depositMoney(long accountNumber, double amount) throws NegativeDepositException {
+    public void depositMoney(long accountNumber, double amount) throws NegativeDepositException, NoSuchAccountException {
 
         try {
             lock.lock();
-
-            getAccount(accountNumber).depositMoney(amount);
-
+            BankAccount account = getAccount(accountNumber);
+            account.depositMoney(amount);
             LocalDateTime localDateTime = LocalDateTime.now();
             TransactionInfo tInfo = new TransactionInfo("Deposit" , amount, localDateTime);
             bankDataStore.storeTransactionInfo(tInfo, accountNumber);
@@ -49,12 +50,12 @@ public class AccountHandler {
         }
     }
 
-    public void withdrawMoney(long accountNumber, double amount) throws AccountLockedException, WithdrawalExceedsBalanceException {
+    public void withdrawMoney(long accountNumber, double amount) throws AccountLockedException, WithdrawalExceedsBalanceException, NoSuchAccountException {
 
         try {
             lock.lock();
-            getAccount(accountNumber).withdrawMoney(amount);
-
+            BankAccount account = getAccount(accountNumber);
+            account.withdrawMoney(amount);
             //Withdraws should be stored as negative amounts
             LocalDateTime localDateTime = LocalDateTime.now();
             TransactionInfo tInfo = new TransactionInfo("Withdraw", -amount, localDateTime);
@@ -64,12 +65,13 @@ public class AccountHandler {
         }
     }
 
-    public void transferMoney(long fromAccountNumber, long toAccountNumber, double amount) throws AccountLockedException, WithdrawalExceedsBalanceException, NegativeDepositException {
-        BankAccount fromAccount = getAccount(fromAccountNumber);
-        BankAccount toAccount = getAccount(toAccountNumber);
+    public void transferMoney(long fromAccountNumber, long toAccountNumber, double amount) throws AccountLockedException, WithdrawalExceedsBalanceException, NegativeDepositException, NoSuchAccountException {
+
         //Transaction
         try{
             lock.lock();
+            BankAccount fromAccount = getAccount(fromAccountNumber);
+            BankAccount toAccount = getAccount(toAccountNumber);
             toAccount.depositMoney(fromAccount.withdrawMoney(amount));
             //If no exception was thrown save transaction
             LocalDateTime localDateTime = LocalDateTime.now();
@@ -87,11 +89,11 @@ public class AccountHandler {
         return bankDataStore.getAllTransactionInfo(accountNumber);
     }
 
-    public void lockAccount(long accountNumber){
+    public void lockAccount(long accountNumber) throws NoSuchAccountException {
         getAccount(accountNumber).lock();
     }
 
-    public void unlockAccount(long accountNumber){
+    public void unlockAccount(long accountNumber) throws NoSuchAccountException {
         getAccount(accountNumber).unlock();
     }
 }

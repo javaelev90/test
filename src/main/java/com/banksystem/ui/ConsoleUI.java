@@ -1,6 +1,7 @@
 package com.banksystem.ui;
 
 import com.banksystem.Exceptions.NegativeDepositException;
+import com.banksystem.Exceptions.NoSuchAccountException;
 import com.banksystem.Exceptions.WithdrawalExceedsBalanceException;
 import com.banksystem.handlers.AccountHandler;
 import com.banksystem.model.BankAccount;
@@ -47,7 +48,11 @@ public class ConsoleUI {
                         if(accountNumber == -1){
                             continue;
                         }
-                        printBalanceSpecificAccount(accountHandler.getAccount(accountNumber));
+                        try {
+                            printBalanceSpecificAccount(accountHandler.getAccount(accountNumber));
+                        } catch (NoSuchAccountException e) {
+                            System.out.println("Account "+e.getMessage()+" does not exist.");
+                        }
                         break;
                     case 4:
                         showTransActionsForAccount(reader);
@@ -93,7 +98,11 @@ public class ConsoleUI {
             return -1;
         }
         List<TransactionInfo> transactionInfoList = accountHandler.getTransactionsLog(accountNumber);
-        if(transactionInfoList == null || transactionInfoList.isEmpty()){
+        if(transactionInfoList == null){
+            System.out.println("Account "+accountNumber+" does not exist.");
+            return -1;
+        }
+        if(transactionInfoList.isEmpty()){
             System.out.println("No transactions for that account.");
             return -1;
         }
@@ -109,7 +118,12 @@ public class ConsoleUI {
         if(accountToUnlock == -1){
             return -1;
         }
-        accountHandler.unlockAccount(accountToUnlock);
+        try {
+            accountHandler.unlockAccount(accountToUnlock);
+        } catch (NoSuchAccountException e) {
+            System.out.println("Account "+e.getMessage()+" does not exist.");
+            return -1;
+        }
         return 0;
     }
 
@@ -118,7 +132,12 @@ public class ConsoleUI {
         if(accountToLock == -1){
             return -1;
         }
-        accountHandler.lockAccount(accountToLock);
+        try {
+            accountHandler.lockAccount(accountToLock);
+        } catch (NoSuchAccountException e) {
+            System.out.println("Account "+e.getMessage()+" does not exist.");
+            return -1;
+        }
         return 0;
     }
 
@@ -141,10 +160,16 @@ public class ConsoleUI {
             accountHandler.transferMoney(fromAccount, toAccount, amount);
         }  catch (AccountLockedException e) {
             System.out.println("Account "+e.getMessage()+" is locked.");
+            return -1;
         } catch (WithdrawalExceedsBalanceException e) {
             System.out.println("The withdrawal exceeds funds.");
+            return -1;
         } catch (NegativeDepositException e) {
             System.out.println("You can't deposit a negative amount.");
+            return -1;
+        } catch (NoSuchAccountException e) {
+            System.out.println("Account "+e.getMessage()+" does not exist.");
+            return -1;
         }
         return 0;
     }
@@ -162,8 +187,13 @@ public class ConsoleUI {
             accountHandler.withdrawMoney(accountNumber, amount);
         }  catch (AccountLockedException e) {
             System.out.println("Account "+e.getMessage()+" is locked.");
+            return -1;
         } catch (WithdrawalExceedsBalanceException e) {
             System.out.println("The withdrawal exceeds funds.");
+            return -1;
+        } catch (NoSuchAccountException e) {
+            System.out.println("Account "+e.getMessage()+" does not exist.");
+            return -1;
         }
         return 0;
     }
@@ -181,6 +211,10 @@ public class ConsoleUI {
             accountHandler.depositMoney(accountNumber, amount);
         } catch (NegativeDepositException e) {
             System.out.println("You can't deposit a negative amount.");
+            return -1;
+        } catch (NoSuchAccountException e) {
+            System.out.println("Account "+e.getMessage()+" does not exist.");
+            return -1;
         }
         return 0;
     }

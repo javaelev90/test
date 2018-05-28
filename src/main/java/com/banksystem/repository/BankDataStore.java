@@ -1,5 +1,6 @@
 package com.banksystem.repository;
 
+import com.banksystem.Exceptions.NoSuchAccountException;
 import com.banksystem.model.BankAccount;
 import com.banksystem.model.TransactionInfo;
 
@@ -66,9 +67,12 @@ public class BankDataStore {
 
     }
 
-    public BankAccount getAccount(long accountNumber) {
-
-        return numberToAccountMapping.get(accountNumber);
+    public BankAccount getAccount(long accountNumber) throws NoSuchAccountException {
+        BankAccount account = numberToAccountMapping.get(accountNumber);
+        if(account == null){
+            throw new NoSuchAccountException(""+accountNumber);
+        }
+        return account;
     }
 
 
