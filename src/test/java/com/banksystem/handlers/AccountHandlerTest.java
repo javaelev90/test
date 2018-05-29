@@ -74,9 +74,9 @@ public class AccountHandlerTest {
         setUpUserWithMultipleAccounts(2, userId);
         List<BankAccount> accounts = accountHandler.getAllAccountsForUser(userId);
 
-        Assert.assertEquals(userId, accounts.get(0).getUserId());
-        Assert.assertEquals(userId, accounts.get(1).getUserId());
-        Assert.assertNotEquals(accounts.get(0).getAccountNumber(), accounts.get(1).getAccountNumber());
+        Assert.assertEquals("Should be the same",userId, accounts.get(0).getUserId());
+        Assert.assertEquals("Should be the same", userId, accounts.get(1).getUserId());
+        Assert.assertNotEquals("Should not have the same account number",accounts.get(0).getAccountNumber(), accounts.get(1).getAccountNumber());
     }
 
     @Test
@@ -84,7 +84,7 @@ public class AccountHandlerTest {
         int userId = 5;
         List<Long> accountNumbers = setUpUserWithMultipleAccounts(1, userId);
         BankAccount account = accountHandler.getAccount(accountNumbers.get(0));
-        Assert.assertEquals(userId, account.getUserId());
+        Assert.assertEquals("Should have the same user id",userId, account.getUserId());
     }
 
     @Test
